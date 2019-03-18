@@ -28,6 +28,16 @@ public class DbViewerImpl implements DbViewer {
 	
 	/* (non-Javadoc)
 	 * @see com.yxt.data.migration.DbViewer#getTransfterTables()
+	 * * 获取目标数据库中的表的所有表名
+	 * table_name
+	 *  class
+		datax_test
+		datax_test2
+		person
+		student
+		sys_user
+		teacher
+		test_abc
 	 */
 	public List<DataTable> getTargetTransfterTables() throws SQLException {
 		String sql = config.getMigrationQueryTargetTablesSql();
@@ -99,10 +109,15 @@ public class DbViewerImpl implements DbViewer {
 		dbHelper.closeTargetConnection();
 		return result;
 	}
-	
-	
+
+
 	/* (non-Javadoc)
 	 * @see com.yxt.data.migration.DbViewer#getTransfterTablesSize()
+	 * 获取到源数据库中的表及表的信息
+	 *
+	 * table_name   size_MB     table_rows
+	 *  datax_test2	0.01562500	7
+		datax_test	0.01562500	6
 	 */
 	public List<DataTableStatus> getSourceTransfterTablesStatus() throws SQLException {
 		String sql = config.getMigrationQuerySourceTablesStatusSql();

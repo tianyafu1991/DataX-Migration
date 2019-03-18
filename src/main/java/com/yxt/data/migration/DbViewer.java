@@ -8,16 +8,16 @@ import com.yxt.data.migration.bean.DataTableStatus;
 
 public interface DbViewer {
 
-	public List<DataTable> getTargetTransfterTables() throws SQLException;
+	List<DataTable> getTargetTransfterTables() throws SQLException;
 
-	public List<String> getTargetTransfterTableColumns(String tableName) throws SQLException;
+	List<String> getTargetTransfterTableColumns(String tableName) throws SQLException;
 
-	public List<String> getTargetTransfterTablePrimaryKey(String tableName) throws SQLException;
+	List<String> getTargetTransfterTablePrimaryKey(String tableName) throws SQLException;
 
-	public List<DataTableStatus> getSourceTransfterTablesStatus() throws SQLException;
+	List<DataTableStatus> getSourceTransfterTablesStatus() throws SQLException;
 
-	public long getSourceTransfterTableMigrationCount(String tableName, String whereClause) throws SQLException;
+	long getSourceTransfterTableMigrationCount(String tableName, String whereClause) throws SQLException;
 
-	public long getTargetTransfterTableMigrationFinishedCount(String tableName, String whereClause) throws SQLException;
+	long getTargetTransfterTableMigrationFinishedCount(String tableName, String whereClause) throws SQLException;
 
 }

@@ -42,6 +42,11 @@ public class ApplicationBoot {
 		boolean onlyReportFlag = false;
 		boolean onlyGenerateFlag = false;
 		boolean onlyExecuteJobsFlag = false;
+		/**
+		 * java -jar datax-migration.jar json #Only generate json files config for all tables.
+		 * java -jar datax-migration.jar report #Only generate cvs report to view migration status.
+		 * java -jar datax-migration.jar run #Only run the migration and generate the cvs reports. Before run this, need generate json config files for all tables first.
+		 */
 		if (args != null && args.length >= 1) {
 			log.info("Main Parameters 1:" + args[0]);
 			onlyReportFlag = "report".equalsIgnoreCase(args[0]) || "onlyreport".equalsIgnoreCase(args[0])

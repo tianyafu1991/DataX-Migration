@@ -79,7 +79,7 @@ public class MigrationTask {
 	
 	public void execute(final boolean skipCommandFlag) {
 		try {
-
+			//获取到源数据库中的表信息及目的数据库中的表信息
 			initAllTableStatus();
 			log.info("init All Table Status done with all table size="+allTableStatus!=null?allTableStatus.size():0);
 
@@ -137,6 +137,7 @@ public class MigrationTask {
 								
 								boolean hasException = false;
 								try {
+									//获取需要导的数据条数
 									long pendingCount = viewer.getSourceTransfterTableMigrationCount(sourceTableName, whereClause);
 									geTableBean.setPendingRecords(pendingCount);
 									

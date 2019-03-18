@@ -28,12 +28,13 @@ public class DataXJobFile {
 	private AppConfig config;
 
 	public void generateJsonJobFile(String sourceTableName, String targetTableName, List<String> columns, String pk, String whereClause, long migrationRecords) {
-
+		//获取json模版
 		String json = getTemplate();
-
+		//获取字段名
 		CharSequence cols = getColumnsString(columns);
+		//获取通道数（即json文件中的setting中的channels数，表示并发数），数据条数>1000000条的小于10000000，channels为2，小于1000000的channels为1，具体看方法
 		int channels = getChannelNumber(migrationRecords);
-		
+		//替换json串模版中的各种占位符
 		json = json.replace("{job.channel}", String.valueOf(channels));
 		json = json.replace("{source.db.username}", config.getSourceDbUsername());
 		json = json.replace("{source.db.password}", config.getSourceDbPassword());
@@ -42,7 +43,7 @@ public class DataXJobFile {
 		json = json.replace("{source.db.table.name}", sourceTableName);
 		json = json.replace("{source.db.url}", config.getSourceDbUrl());
 		json = json.replace("{source.db.type}", getDbType(config.getSourceDbUrl()));
-		
+		//替换where条件
 		if (whereClause!=null && !"".equals(whereClause)){
 			json = json.replace("{source.db.table.where.clause}",
 					"\"where\": \" " + whereClause +"\",");
@@ -61,6 +62,8 @@ public class DataXJobFile {
 
 		try {
 			log.info("Write job json for table:"+sourceTableName);
+			//将json串写入文件，
+			//TODO 这里产生的json文件可能会导致文件名重名，要改一下
 			writeToFile(sourceTableName, json);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
@@ -156,6 +159,7 @@ public class DataXJobFile {
 
 
 	private void writeToFile(String fileName, String json) throws IOException {
+		//生成的文件名，文件名可能会重复
 		File file = new File(config.getDataxToolFolder() + "/job/" + fileName + ".json");
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(file));
